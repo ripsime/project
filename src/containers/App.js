@@ -1,35 +1,36 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
 // Commons
-import Header from "./common/Header";
-import Nav from "./common/Nav";
+import Header from "./common/header/Header";
+import Panel from './common/panel/panel';
 import PageNotFound from "./common/PageNotFound";
+import Home from "./common/home/home";
+
 // Containers
-import Home from "./home/Home";
 import Dashboard from "./dashboard/Dashboard";
+
+import './app.less';
 
 class App extends Component {
 	render() {
 		return (
-			<Router>
-				<div className="wrapper">
-					{/* <Header /> */}
-					<div className="main">
-						<Nav />
-						<div className="content">
-							<Switch>
-								<Route exact path="/" component={Home} />
-								<Route path="/home" component={Home} />
-								<Route
-									path="/dashboard"
-									component={Dashboard}
-								/>
-								<Route component={PageNotFound} />
-							</Switch>
+			<Fragment>
+				<Header/>
+				<Router>
+					<div className="body">
+						<Panel />
+						<div className="main">
+						<Switch>
+                                <Route path='/' component={Home} exact/>
+                                <Route path='/home' component={Home}/>
+                                <Route path='/dashboard' component={Dashboard}/>
+                                <Route component={PageNotFound}/>                        
+                            </Switch>
 						</div>
 					</div>
-				</div>
-			</Router>
+				</Router>				
+			</Fragment>
 		);
 	}
 }
