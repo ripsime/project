@@ -43,6 +43,7 @@
 		"webpack-hot-middleware": "^2.25.0"
 	},
 	"dependencies": {
+		"chart.js": "^2.9.4",
 		"lodash": "^4.17.20",
 		"nedb": "^1.8.0",
 		"react-grid-layout": "0.16.2"
