@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 // Components
-import Layout from '../../components/Layout';
+import Layout from '../../components/layout/Layout';
 // Actions
 import * as dashboardActions from './dashboardActions';
 // Services

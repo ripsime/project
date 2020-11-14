@@ -6,8 +6,8 @@ import App from "./containers/App";
 
 import store from "./store/configureStore";
 
-import "./assets/normalize.css";
-import "./assets/main.less";
+import "./normalize.css";
+import "./main.less";
 
 render(
 	<Provider store={store}>

@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 import { Responsive, WidthProvider } from 'react-grid-layout';
 
+import './layout.less';
+
 const ResponsiveGridLayout = WidthProvider(Responsive);
 
 class Layout extends Component {
