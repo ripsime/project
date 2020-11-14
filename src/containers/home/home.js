@@ -1,6 +1,6 @@
 import { render } from 'less';
 import React, { Component } from 'react';
-import LineChart from '../../../components/LineChart';
+import LineChart from '../../components/LineChart';
 
 import './home.less';
 class Home extends Component {
