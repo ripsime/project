@@ -1,6 +1,6 @@
 import {
 	GET_LAYOUT,
-	SET_LAYOUT,
+	UPDATE_LAYOUT,
 	ADD_ITEM,
 } from '../containers/dashboard/dashboardActions';
 
@@ -24,9 +24,10 @@ function dashboard(state = initialState, action) {
 				loading: true,
 			};
 		}
-		case SET_LAYOUT: {
+		case UPDATE_LAYOUT: {
 			return {
 				...state,
+				loading: true,
 				layout: action.payload.layout,
 			};
 		}

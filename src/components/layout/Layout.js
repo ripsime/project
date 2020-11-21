@@ -68,7 +68,7 @@ class Layout extends Component {
 			oldLayoutItem.w !== l.w ||
 			oldLayoutItem.h !== l.h
 		) {
-			this.props.setLayout({ layout });
+			this.props.updateLayout({ layout });
 		}
 	};
 
