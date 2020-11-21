@@ -17,7 +17,7 @@ class Home extends Component {
             this.setState({
                 data: this.getData()
             })
-        }, 5000)
+        }, 500000)
     }
 
     // TODO : This is for dummy data
