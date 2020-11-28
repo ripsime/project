@@ -4,8 +4,18 @@ module.exports = (app) => {
 	// Get Layout
 	app.get('/layout', layout.get);
 
-	// Add item
-	app.post('/layout', layout.add);
+	// Set Layout
+	app.post('/layout', layout.update);
 
-	// TODO add route for layout
+	// Update item
+	app.put('/layout', layout.update);
+
+	// Delete item
+	app.delete('/layout', layout.delete);
+
+	// Add item
+	app.post('/item', layout.add);
+
+
+
 };

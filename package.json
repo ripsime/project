@@ -7,7 +7,8 @@
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"build": "webpack --config ./webpack.dev.config.js --progress --colors",
 		"dev": "set \"NODE_ENV=development\" && node server.js",
-		"start": "node server.js"
+		"devLinux": "export \"NODE_ENV=development\" && node server.js",
+		"start": "nodemon server.js"
 	},
 	"author": "",
 	"license": "MIT",
@@ -43,6 +44,7 @@
 		"webpack-hot-middleware": "^2.25.0"
 	},
 	"dependencies": {
+		"body-parser": "^1.19.0",
 		"chart.js": "^2.9.4",
 		"lodash": "^4.17.20",
 		"nedb": "^1.8.0",
