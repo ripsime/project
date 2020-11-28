@@ -51,9 +51,15 @@ class LineChart extends Component {
 		this.lineChart.update();
 	}
 
+	updateSizes = (width, height) => {
+		this.setState({ width, height })
+	}
+
 	render() {
-		return (
-			<canvas ref={this.lineChartRef} />
+		return (			
+			<div>
+				<canvas ref={this.lineChartRef} />
+			</div>
 		);
 	}
 }
