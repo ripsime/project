@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
 import Chart from 'chart.js';
-import ReactResizeDetector from 'react-resize-detector';
 
 class BarChart extends Component {
 	constructor(props) {
 		super(props);
-		this.barChartRef = React.createRef();
-
-		this.state = {
-			height: 100,
-			width: 100,
-		};
+		this.barChartRef = React.createRef()
 	}
 
 	componentDidMount() {
@@ -59,20 +53,10 @@ class BarChart extends Component {
 		this.barChart.update();
 	}
 
-	updateSizes = (width, height) => {
-		this.setState({ width, height })
-	}
-
-	render() {
-		const style = { width: this.state.width, height: this.state.height };
-
+	render() {		
 		return (
-			<div style={{ width: '100%' }}>
-				<div style={style}>
-					<canvas ref={this.barChartRef} style={style} />
-				</div>
-
-				<ReactResizeDetector handleHeight handleWidth onResize={this.updateSizes} />
+			<div>
+				<canvas ref={this.barChartRef} />
 			</div>
 		);
 	}

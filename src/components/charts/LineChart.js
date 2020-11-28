@@ -1,16 +1,10 @@
 import React, { Component } from 'react';
 import Chart from 'chart.js';
-import ReactResizeDetector from 'react-resize-detector';
 
 class LineChart extends Component {
 	constructor(props) {
 		super(props);
 		this.lineChartRef = React.createRef();
-
-		this.state = {
-			height: 100,
-			width: 100,
-		};
 	}
 
 	componentDidMount() {
@@ -62,15 +56,9 @@ class LineChart extends Component {
 	}
 
 	render() {
-		const style = { width: this.state.width, height: this.state.height };
-
-		return (
-			<div style={{ width: '100%' }}>
-				<div style={style}>
-					<canvas ref={this.lineChartRef} style={style} />
-				</div>
-
-				<ReactResizeDetector handleHeight handleWidth onResize={this.updateSizes} />
+		return (			
+			<div>
+				<canvas ref={this.lineChartRef} />
 			</div>
 		);
 	}
