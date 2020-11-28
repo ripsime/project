@@ -13,7 +13,20 @@ export const getLayoutService = (callback) => {
 };
 
 export const setLayoutService = (callback) => {
-	axios.post('http://localhost:3000/layout').then(
+	// axios.post('http://localhost:3000/layout').then(
+	// 	(result) => {
+	// 		callback(result);
+	// 		console.log(result);
+	// 	},
+	// 	(error) => {
+	// 		console.log(`Error - ${error}`);
+	// 	}
+	// );
+};
+
+export const updateLayoutService = (callback, payload) => {
+	console.log("payload: ", payload)
+	axios.post('http://localhost:3000/layout', {layout: payload} ).then(
 		(result) => {
 			callback(result);
 			console.log(result);
@@ -23,6 +36,19 @@ export const setLayoutService = (callback) => {
 		}
 	);
 };
+
+export const deleteLayoutService = (callback) => {
+	axios.delete('http://localhost:3000/layout').then(
+		(result) => {
+			callback(result);
+			console.log(result);
+		},
+		(error) => {
+			console.log(`Error - ${error}`);
+		}
+	);
+};
+
 // TODO resolve issue
 export const addItemService = (callback) => {
 	axios
