@@ -40,12 +40,14 @@ class Dashboard extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				<div>Dashboard</div>
-				<Layout
-					layout={this.props.layout}
-					addItem={this.addItem}
-					updateLayout={this.updateLayout}
-				/>
+				<div>Dashboard</div>				
+				<div>
+					<button onClick={this.addItem}>Add Item</button>
+					<Layout
+						layout={this.props.layout}
+						updateLayout={this.updateLayout}
+					/>
+				</div>
 			</React.Fragment>
 		);
 	}

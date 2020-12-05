@@ -86,20 +86,16 @@ class Layout extends Component {
 	};
 
 	render() {
-		// TODO Move add item button to dashboard
 		return (
-			<div>
-				<button onClick={this.props.addItem}>Add Item</button>
-				<ResponsiveGridLayout
-					// onLayoutChange={this.onLayoutChange}
-					onBreakpointChange={this.onBreakpointChange}
-					onDragStop={this.onDragStop}
-					onResizeStop={this.onResizeStop}
-					{...this.props}
-				>
-					{_.map(this.state.layout, (el) => this.createElement(el))}
-				</ResponsiveGridLayout>
-			</div>
+			<ResponsiveGridLayout
+				// onLayoutChange={this.onLayoutChange}
+				onBreakpointChange={this.onBreakpointChange}
+				onDragStop={this.onDragStop}
+				onResizeStop={this.onResizeStop}
+				{...this.props}
+			>
+				{_.map(this.state.layout, (el) => this.createElement(el))}
+			</ResponsiveGridLayout>
 		);
 	}
 }
