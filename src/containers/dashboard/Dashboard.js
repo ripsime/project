@@ -15,6 +15,8 @@ import {
 
 import AddItemPopup from '../../components/addItemPopup/AddItemPopup';
 
+import "./dashboard.less";
+
 class Dashboard extends Component {
 	state={
 		isAddItemPopUp:false
@@ -55,8 +57,11 @@ class Dashboard extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				<div>Dashboard</div>		
-				<button onClick={this.openAddItemPopup}>Add Item</button>
+				<div className="dashboard-title">Dashboard</div>		
+				<button onClick={this.openAddItemPopup} className="addButton">
+					<i className="fa fa-plus"></i>
+					Add Item
+				</button>
 				<div>
 					{this.state.isAddItemPopUp && <AddItemPopup addItem={this.additem} cancelAddItem={this.cancelAddItem}/>}
 					<Layout

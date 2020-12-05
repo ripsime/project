@@ -49,7 +49,7 @@ class Layout extends Component {
 		return (
 			<div key={el._id} className='layout-item'>
 				<span className='remove' onClick={this.onRemoveItem.bind(this, el._id)}>
-					<i class="fa fa-times"></i>
+					<i className="fa fa-times"></i>
 				</span>
 				<CustomChart
 					data={data}		//get using el.sensor and el.metric
