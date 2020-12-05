@@ -55,12 +55,13 @@ class Dashboard extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				<div>Dashboard</div>				
+				<div>Dashboard</div>		
+				<button onClick={this.openAddItemPopup}>Add Item</button>
 				<div>
 					{this.state.isAddItemPopUp && <AddItemPopup addItem={this.additem} cancelAddItem={this.cancelAddItem}/>}
 					<Layout
 						layout={this.props.layout}
-						addItem={this.openAddItemPopup}
+						// addItem={this.openAddItemPopup}
 						updateLayout={this.updateLayout}
 						deleteLayout={this.deleteLayout}
 					/>
