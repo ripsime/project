@@ -10,6 +10,7 @@ import {
 	getLayoutService,
 	updateLayoutService,
 	addItemService,
+	deleteLayoutService,
 } from './dashboardService';
 
 class Dashboard extends Component {
@@ -24,13 +25,14 @@ class Dashboard extends Component {
 		}
 	}
 
-	updateLayout = () => {
-		console.log("this.props: ", this.props)
-		updateLayoutService(this.props.update_layout, this.props.layout );
+	updateLayout = (layout) => {
+		updateLayoutService(this.props.update_layout, layout);
 	};
 
-	deleteLayout = () => {
-		setLayoutService(this.props.delete_layout);
+	deleteLayout = (_id) => {
+		deleteLayoutService(this.props.delete_layout, _id);
+		//TODO
+		getLayoutService(this.props.get_layout);
 	};
 
 	addItem = () => {
@@ -46,6 +48,7 @@ class Dashboard extends Component {
 					<Layout
 						layout={this.props.layout}
 						updateLayout={this.updateLayout}
+						deleteLayout={this.deleteLayout}
 					/>
 				</div>
 			</React.Fragment>

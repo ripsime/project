@@ -1,16 +1,19 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-import { Responsive, WidthProvider } from 'react-grid-layout';
+//import { Responsive, WidthProvider, GridLayout } from 'react-grid-layout';
+import GridLayout from 'react-grid-layout';
 
 import './layout.less';
 
-const ResponsiveGridLayout = WidthProvider(Responsive);
+//const ResponsiveGridLayout = WidthProvider(Responsive);
 
 class Layout extends Component {
 	static defaultProps = {
 		className: 'layout',
-		cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
+		//cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
+		cols: 12,
 		rowHeight: 100,
+		width: 1200,
 	};
 
 	state = {
@@ -68,7 +71,7 @@ class Layout extends Component {
 			oldLayoutItem.w !== l.w ||
 			oldLayoutItem.h !== l.h
 		) {
-			this.props.updateLayout({ layout });
+			this.props.updateLayout(layout);
 		}
 	};
 
@@ -81,21 +84,26 @@ class Layout extends Component {
 	};
 
 	onRemoveItem = (_id) => {
-		console.log('removing', i);
-		this.setState({ layout: _.reject(this.state.layout, { _id }) });
+		this.props.deleteLayout(_id);
+		//this.setState({ layout: _.reject(this.state.layout, { _id }) });
 	};
 
 	render() {
+		var lyt = _.map(this.props.layout, (el)=>({i: el._id, w:el.w, h:el.h, x: el.x, y: el.y}))
 		return (
-			<ResponsiveGridLayout
+			<GridLayout
 				// onLayoutChange={this.onLayoutChange}
 				onBreakpointChange={this.onBreakpointChange}
 				onDragStop={this.onDragStop}
 				onResizeStop={this.onResizeStop}
-				{...this.props}
+				className={this.props.className}
+				cols={12}
+				rowHeight={this.props.rowHeight}
+				width={this.props.width}
+				layout={lyt}
 			>
 				{_.map(this.state.layout, (el) => this.createElement(el))}
-			</ResponsiveGridLayout>
+			</GridLayout>
 		);
 	}
 }
