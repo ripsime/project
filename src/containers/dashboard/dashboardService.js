@@ -48,8 +48,8 @@ export const addItemService = (callback) => {
 			layout: {
 				x: 0,
 				y: 0,
-				w: 2,
-				h: 2,
+				w: 5,
+				h: 3,
 			},
 		})
 		.then(
