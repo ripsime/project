@@ -90,7 +90,6 @@ exports.add = (req, res) => {
 	console.log('Add item');
 
 	const { layout } = req.body;
-
 	db.layout.insert(layout, () => {
 		console.log('Added');
 		return res.send({

@@ -41,7 +41,8 @@ export const deleteLayoutService = (callback, payload) => {
 };
 
 // TODO resolve issue
-export const addItemService = (callback) => {
+export const addItemService = (callback, data) => {
+	console.log(data)
 	axios
 		.post(`${APIUrl}/item`, {
 			// TODO default layout to arrange side by side in empty spaces
@@ -51,6 +52,7 @@ export const addItemService = (callback) => {
 				w: 5,
 				h: 3,
 			},
+			...data
 		})
 		.then(
 			(result) => {
