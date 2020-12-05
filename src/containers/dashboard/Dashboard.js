@@ -13,7 +13,12 @@ import {
 	deleteLayoutService,
 } from './dashboardService';
 
+import AddItemPopup from '../../components/addItemPopup/AddItemPopup';
+
 class Dashboard extends Component {
+	state={
+		isAddItemPopUp:false
+	}
 	componentDidMount() {
 		getLayoutService(this.props.get_layout);
 	}
@@ -35,8 +40,16 @@ class Dashboard extends Component {
 		getLayoutService(this.props.get_layout);
 	};
 
-	addItem = () => {
-		addItemService(this.props.add_item);
+	openAddItemPopup = () => {
+		this.setState({isAddItemPopUp:true})
+	};	
+
+	additem = (data) => {
+		addItemService(this.props.add_item, data);
+	};
+
+	cancelAddItem = () => {
+		this.setState({isAddItemPopUp:false})
 	};
 
 	render() {
@@ -44,9 +57,10 @@ class Dashboard extends Component {
 			<React.Fragment>
 				<div>Dashboard</div>				
 				<div>
-					<button onClick={this.addItem}>Add Item</button>
+					{this.state.isAddItemPopUp && <AddItemPopup addItem={this.additem} cancelAddItem={this.cancelAddItem}/>}
 					<Layout
 						layout={this.props.layout}
+						addItem={this.openAddItemPopup}
 						updateLayout={this.updateLayout}
 						deleteLayout={this.deleteLayout}
 					/>
