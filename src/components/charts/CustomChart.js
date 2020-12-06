@@ -43,6 +43,9 @@ class CustomChart extends Component {
 					xAxes: [
 						{
 							type: 'time',
+							ticks: {
+								min: 0
+							},
 							// time: {
 							// 	unit: 'week'
 							// }
@@ -69,6 +72,7 @@ class CustomChart extends Component {
 					//Line options
 					fill: 'none',
 					lineTension: 0,
+					barThickness: 'flex',
 					//Bar options
 					borderSkipped: this.props.borderSkipped,
 					hoverBackgroundColor: this.props.hoverBackgroundColor,
