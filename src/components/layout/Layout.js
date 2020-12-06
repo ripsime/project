@@ -25,36 +25,19 @@ class Layout extends Component {
 		}
 
 		return null;
-	}
-
-		// TODO : This is for dummy data
-	getRandomDateArray = (numItems) => {
-		// Create random array of objects (with date)
-		let data = [];
-		let baseTime = new Date('2020-12-05T16:55:00').getTime();
-		let dayMs = 24 * 60 * 60 * 1000;
-		for (var i = 0; i < numItems; i++) {
-			data.push({
-				time: new Date(baseTime + i * dayMs),
-				value: Math.round(20 + 80 * Math.random())
-			});
-		}
-		return data;
-	}
+	}	
 
 	createElement = (el) => {
-		let type = Math.ceil(Math.random()*10) % 2 == 0 ? "bar" : "line";
-		let data = this.getRandomDateArray(10);
-
 		return (
 			<div key={el._id} className='layout-item'>
 				<span className='remove' onClick={this.onRemoveItem.bind(this, el._id)}>
 					<i className="fa fa-times"></i>
 				</span>
 				<CustomChart
-					data={data}		//get using el.sensor and el.metric
-					title={"Title"} //el.name
-					type={type}		//el.type		
+					sensor={el.sensor}
+					metric={el.metric}
+					title={el.name}
+					type={el.type}
 					color="#3E517A"
 				/>
 			</div>
