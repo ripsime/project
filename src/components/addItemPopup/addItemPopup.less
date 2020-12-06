@@ -1,28 +1,60 @@
-.addItemPopup {
-  width: 20%;
-  min-width: 250px;
-  border: 2px solid black;
-  form {
-    padding: 0.5rem;
-    div {
+.modalPopup {
+  background-color: rgba(0, 0, 0, 0.5);
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .addItemPopup {
+    width: 20%;
+    min-width: 250px;
+    border-radius: 6px;
+    background-color: white;
+    padding: 8px;
+    form {
       padding: 0.5rem;
-      width: 100%;
-      label,
-      input,
-      select {
-        display: inline-block;
-        width: 50%;
-        padding: 6px;
+      div {
+        padding: 0.5rem;
+        width: 100%;
+        label,
+        input,
+        select {
+          display: inline-block;
+          width: 50%;
+          padding: 6px;
+        }
+        label {
+          color: #333333;
+        }
+        select,
+        input {
+          outline: none;
+          border: 1px solid #333333;
+          color: #333333;
+        }
       }
     }
-  }
-  .buttons {
-    padding: 0.5rem;
-    display: flex;
-    justify-content: space-evenly;
-    button {
-      padding: 6px;
-      cursor: pointer;
+    .buttons {
+      padding: 0.5rem;
+      display: flex;
+      justify-content: space-evenly;
+      button {
+        background-color: white;
+        border: 2px solid #085c97;
+        border-radius: 6px;
+        color: #085c97;
+        padding: 8px 12px;
+        cursor: pointer;
+        outline: none;
+        transition: 0.3s;
+        &:hover {
+          background-color: #085c97;
+          color: white;
+        }
+      }
     }
   }
 }
