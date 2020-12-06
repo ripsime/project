@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 // Components
 import Layout from '../../components/layout/Layout';
+import Modal from '../../components/modal/Modal';
 // Actions
 import * as dashboardActions from './dashboardActions';
 // Services
@@ -45,6 +46,7 @@ class Dashboard extends Component {
 	};	
 
 	additem = (data) => {
+		this.setState({isAddItemPopUp:false})
 		addItemService(this.props.add_item, data);
 	};
 
@@ -57,11 +59,17 @@ class Dashboard extends Component {
 			<React.Fragment>
 				<div>Dashboard</div>		
 				<button onClick={this.openAddItemPopup}>Add Item</button>
+				<Modal>
+					{ this.state.isAddItemPopUp && 
+						<AddItemPopup 
+							addItem={this.additem} 
+							cancelAddItem={this.cancelAddItem}
+						/>
+					}						
+				</Modal>				
 				<div>
-					{this.state.isAddItemPopUp && <AddItemPopup addItem={this.additem} cancelAddItem={this.cancelAddItem}/>}
 					<Layout
 						layout={this.props.layout}
-						// addItem={this.openAddItemPopup}
 						updateLayout={this.updateLayout}
 						deleteLayout={this.deleteLayout}
 					/>
