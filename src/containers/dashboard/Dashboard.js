@@ -39,8 +39,6 @@ class Dashboard extends Component {
 
 	deleteLayout = (_id) => {
 		deleteLayoutService(this.props.delete_layout, _id);
-		//TODO
-		getLayoutService(this.props.get_layout);
 	};
 
 	openAddItemPopup = () => {

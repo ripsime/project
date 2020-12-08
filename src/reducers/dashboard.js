@@ -2,6 +2,7 @@ import {
 	GET_LAYOUT,
 	UPDATE_LAYOUT,
 	ADD_ITEM,
+	DELETE_LAYOUT,
 } from '../containers/dashboard/dashboardActions';
 
 const initialState = {
@@ -25,6 +26,13 @@ function dashboard(state = initialState, action) {
 			};
 		}
 		case UPDATE_LAYOUT: {
+			return {
+				...state,
+				loading: true,
+				layout: action.payload.layout,
+			};
+		}
+		case DELETE_LAYOUT: {
 			return {
 				...state,
 				loading: true,
