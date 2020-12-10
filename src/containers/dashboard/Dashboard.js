@@ -1,6 +1,10 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import socketIOClient from "socket.io-client";
+import PROPERTY from "../../../property";
+import _ from 'lodash';
+
 // Components
 import Layout from '../../components/layout/Layout';
 import Modal from '../../components/modal/Modal';
@@ -20,7 +24,9 @@ import "./dashboard.less";
 
 class Dashboard extends Component {
 	state={
-		isAddItemPopUp:false
+		isAddItemPopUp:false,
+		data: {},
+		socketListenersAdded: false,
 	}
 	componentDidMount() {
 		getLayoutService(this.props.get_layout);
@@ -28,8 +34,12 @@ class Dashboard extends Component {
 
 	componentDidUpdate() {
 		if (this.props.loading) {
-			console.log("updating")
 			getLayoutService(this.props.get_layout);
+		}
+
+		if(!this.state.socketListenersAdded){
+			_.map(this.props.layout, (el) => this.addSocketListener(el.sensor, el.metric));
+			this.setState({socketListenersAdded: true})
 		}
 	}
 
@@ -45,9 +55,35 @@ class Dashboard extends Component {
 		this.setState({isAddItemPopUp:true})
 	};	
 
+	addSocketListener = (sensor, metric) => {
+		const socket = socketIOClient(`http://${PROPERTY.host}:${PROPERTY.port}`);
+		
+		var key = `${sensor}_${metric}`;
+
+		socket.emit('join', key);
+		socket.on("outgoing", resp => {
+			let baseTime = new Date().getTime();			
+			let val = {
+				time: new Date(baseTime),
+				value: resp.data.value,
+			};            
+			let existingData = this.state.data[key] || [];
+			if(existingData.length >= 10){
+				existingData = existingData.slice(1);
+			}
+			existingData.push(val)
+	
+			let copiedData = this.state.data;
+			copiedData[key] = existingData;
+
+			this.setState({data: copiedData});
+		});
+	}
+
 	additem = (data) => {
 		this.setState({isAddItemPopUp:false})
 		addItemService(this.props.add_item, data);
+		this.addSocketListener(data.sensor, data.metric);
 	};
 
 	cancelAddItem = () => {
@@ -73,6 +109,7 @@ class Dashboard extends Component {
 				<div>
 					<Layout
 						layout={this.props.layout}
+						data={this.state.data}
 						updateLayout={this.updateLayout}
 						deleteLayout={this.deleteLayout}
 					/>

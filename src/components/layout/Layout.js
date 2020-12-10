@@ -15,6 +15,7 @@ class Layout extends Component {
 
 	state = {
 		layout: this.props.layout,
+		data: this.props.data,
 	};
 
 	static getDerivedStateFromProps(nextProps, prevState) {
@@ -36,6 +37,7 @@ class Layout extends Component {
 				<CustomChart
 					sensor={el.sensor}
 					metric={el.metric}
+					data={this.state.data[`${el.sensor}_${el.metric}`] || []}
 					title={el.name}
 					type={el.type}
 					color="#3E517A"
