@@ -12,16 +12,18 @@ import {
 	updateLayoutService,
 	addItemService,
 	deleteLayoutService,
+	getSensorsService,
 } from './dashboardService';
 
 import AddItemPopup from '../../components/addItemPopup/AddItemPopup';
 
 class Dashboard extends Component {
-	state={
-		isAddItemPopUp:false
+	state = {
+		isAddItemPopUp: false
 	}
 	componentDidMount() {
 		getLayoutService(this.props.get_layout);
+		getSensorsService(this.props.get_sensors);
 	}
 
 	componentDidUpdate() {
@@ -42,31 +44,31 @@ class Dashboard extends Component {
 	};
 
 	openAddItemPopup = () => {
-		this.setState({isAddItemPopUp:true})
-	};	
+		this.setState({ isAddItemPopUp: true })
+	};
 
 	additem = (data) => {
-		this.setState({isAddItemPopUp:false})
+		this.setState({ isAddItemPopUp: false })
 		addItemService(this.props.add_item, data);
 	};
 
 	cancelAddItem = () => {
-		this.setState({isAddItemPopUp:false})
+		this.setState({ isAddItemPopUp: false })
 	};
 
 	render() {
 		return (
 			<React.Fragment>
-				<div>Dashboard</div>		
+				<div>Dashboard</div>
 				<button onClick={this.openAddItemPopup}>Add Item</button>
 				<Modal>
-					{ this.state.isAddItemPopUp && 
-						<AddItemPopup 
-							addItem={this.additem} 
+					{this.state.isAddItemPopUp &&
+						<AddItemPopup
+							addItem={this.additem}
 							cancelAddItem={this.cancelAddItem}
 						/>
-					}						
-				</Modal>				
+					}
+				</Modal>
 				<div>
 					<Layout
 						layout={this.props.layout}
