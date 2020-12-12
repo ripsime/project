@@ -5,7 +5,8 @@ module.exports = (app) => {
 	app.get('/layout', layout.get);
 
 	// Set Layout
-	app.post('/layout', layout.update);
+	// app.post('/layout', layout.update);
+	app.post('/layout', layout.set);
 
 	// Update item
 	app.put('/layout', layout.update);
