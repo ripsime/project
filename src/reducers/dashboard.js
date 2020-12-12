@@ -2,6 +2,7 @@ import {
 	GET_LAYOUT,
 	UPDATE_LAYOUT,
 	ADD_ITEM,
+	DELETE_LAYOUT,
 	GET_SENSORS,
 } from '../containers/dashboard/dashboardActions';
 
@@ -33,7 +34,14 @@ function dashboard(state = initialState, action) {
 				layout: action.payload.layout,
 			};
 		}
-		case GET_LAYOUT: {
+		case DELETE_LAYOUT: {
+			return {
+				...state,
+				loading: true,
+				layout: action.payload.layout,
+			}
+		}		
+		case GET_SENSORS: {
 			return {
 				...state,
 				senors: action.payload.data,

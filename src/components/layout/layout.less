@@ -3,7 +3,23 @@
 
 	.layout-item {
 		cursor: pointer;
-		border: 1px solid blue;
+		padding: 20px 40px 30px 30px;
+		background: #fafafa;
+    	border: 1px solid #dedede;
+
+		&>div {
+			position: relative;
+			transform: translateY(-50%);
+			top: 50%;
+		}
+
+		.remove {
+			position: absolute;
+			right: 0;
+			top: 0;
+			cursor: 'pointer';
+			margin: 5px 8px 0 0;
+		}
 	}
 
 	.react-resizable-handle {

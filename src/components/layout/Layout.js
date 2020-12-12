@@ -1,16 +1,13 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
-//import { Responsive, WidthProvider, GridLayout } from 'react-grid-layout';
 import GridLayout from 'react-grid-layout';
+import CustomChart from '../../components/charts/CustomChart';
 
 import './layout.less';
-
-//const ResponsiveGridLayout = WidthProvider(Responsive);
 
 class Layout extends Component {
 	static defaultProps = {
 		className: 'layout',
-		//cols: { lg: 12, md: 10, sm: 6, xs: 4, xxs: 2 },
 		cols: 12,
 		rowHeight: 100,
 		width: 1200,
@@ -18,6 +15,7 @@ class Layout extends Component {
 
 	state = {
 		layout: this.props.layout,
+		data: this.props.data,
 	};
 
 	static getDerivedStateFromProps(nextProps, prevState) {
@@ -28,31 +26,22 @@ class Layout extends Component {
 		}
 
 		return null;
-	}
-
-	// onLayoutChange = (layout) => {
-	// 	// this.props.setLayout(layout);
-	// 	this.setState({ layout });
-	// };
+	}	
 
 	createElement = (el) => {
-		const removeStyle = {
-			position: 'absolute',
-			right: '2px',
-			top: 0,
-			cursor: 'pointer',
-		};
-
 		return (
 			<div key={el._id} className='layout-item'>
-				<span className='text'>{el._id}</span>
-				<span
-					className='remove'
-					style={removeStyle}
-					onClick={this.onRemoveItem.bind(this, el._id)}
-				>
-					x
+				<span className='remove' onClick={this.onRemoveItem.bind(this, el._id)}>
+					<i className="fa fa-times"></i>
 				</span>
+				<CustomChart
+					sensor={el.sensor}
+					metric={el.metric}
+					data={this.state.data[`${el.sensor}_${el.metric}`] || []}
+					title={el.name}
+					type={el.type}
+					color="#3E517A"
+				/>
 			</div>
 		);
 	};
@@ -85,11 +74,10 @@ class Layout extends Component {
 
 	onRemoveItem = (_id) => {
 		this.props.deleteLayout(_id);
-		//this.setState({ layout: _.reject(this.state.layout, { _id }) });
 	};
 
 	render() {
-		var lyt = _.map(this.props.layout, (el)=>({i: el._id, w:el.w, h:el.h, x: el.x, y: el.y}))
+		var lyt = _.map(this.props.layout, (el)=>({i: el._id, w:el.w, h:el.h, x: el.x, y: el.y, minW: 5, minH: 3, maxW: 12, maxH: 6}))
 		return (
 			<GridLayout
 				// onLayoutChange={this.onLayoutChange}
@@ -97,7 +85,7 @@ class Layout extends Component {
 				onDragStop={this.onDragStop}
 				onResizeStop={this.onResizeStop}
 				className={this.props.className}
-				cols={12}
+				cols={this.props.cols}
 				rowHeight={this.props.rowHeight}
 				width={this.props.width}
 				layout={lyt}
