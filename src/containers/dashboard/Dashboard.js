@@ -3,6 +3,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 // Components
 import Layout from '../../components/layout/Layout';
+import Modal from '../../components/modal/Modal';
 // Actions
 import * as dashboardActions from './dashboardActions';
 // Services
@@ -10,9 +11,15 @@ import {
 	getLayoutService,
 	updateLayoutService,
 	addItemService,
+	deleteLayoutService,
 } from './dashboardService';
 
+import AddItemPopup from '../../components/addItemPopup/AddItemPopup';
+
 class Dashboard extends Component {
+	state={
+		isAddItemPopUp:false
+	}
 	componentDidMount() {
 		getLayoutService(this.props.get_layout);
 	}
@@ -24,28 +31,49 @@ class Dashboard extends Component {
 		}
 	}
 
-	updateLayout = () => {
-		console.log("this.props: ", this.props)
-		updateLayoutService(this.props.update_layout, this.props.layout );
+	updateLayout = (layout) => {
+		updateLayoutService(this.props.update_layout, layout);
 	};
 
-	deleteLayout = () => {
-		setLayoutService(this.props.delete_layout);
+	deleteLayout = (_id) => {
+		deleteLayoutService(this.props.delete_layout, _id);
+		//TODO
+		getLayoutService(this.props.get_layout);
 	};
 
-	addItem = () => {
-		addItemService(this.props.add_item);
+	openAddItemPopup = () => {
+		this.setState({isAddItemPopUp:true})
+	};	
+
+	additem = (data) => {
+		this.setState({isAddItemPopUp:false})
+		addItemService(this.props.add_item, data);
+	};
+
+	cancelAddItem = () => {
+		this.setState({isAddItemPopUp:false})
 	};
 
 	render() {
 		return (
 			<React.Fragment>
-				<div>Dashboard</div>
-				<Layout
-					layout={this.props.layout}
-					addItem={this.addItem}
-					updateLayout={this.updateLayout}
-				/>
+				<div>Dashboard</div>		
+				<button onClick={this.openAddItemPopup}>Add Item</button>
+				<Modal>
+					{ this.state.isAddItemPopUp && 
+						<AddItemPopup 
+							addItem={this.additem} 
+							cancelAddItem={this.cancelAddItem}
+						/>
+					}						
+				</Modal>				
+				<div>
+					<Layout
+						layout={this.props.layout}
+						updateLayout={this.updateLayout}
+						deleteLayout={this.deleteLayout}
+					/>
+				</div>
 			</React.Fragment>
 		);
 	}

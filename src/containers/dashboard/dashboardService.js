@@ -1,7 +1,10 @@
 import axios from 'axios';
+import PROPERTY from '../../../property'
+
+const APIUrl = `http://${PROPERTY.host}:${PROPERTY.port}`;
 
 export const getLayoutService = (callback) => {
-	axios.get('http://localhost:3000/layout').then(
+	axios.get(`${APIUrl}/layout`).then(
 		(result) => {
 			callback(result);
 			console.log(result);
@@ -10,23 +13,11 @@ export const getLayoutService = (callback) => {
 			console.log(`Error - ${error}`);
 		}
 	);
-};
-
-export const setLayoutService = (callback) => {
-	// axios.post('http://localhost:3000/layout').then(
-	// 	(result) => {
-	// 		callback(result);
-	// 		console.log(result);
-	// 	},
-	// 	(error) => {
-	// 		console.log(`Error - ${error}`);
-	// 	}
-	// );
 };
 
 export const updateLayoutService = (callback, payload) => {
 	console.log("payload: ", payload)
-	axios.post('http://localhost:3000/layout', {layout: payload} ).then(
+	axios.put(`${APIUrl}/layout`, {layout: payload} ).then(
 		(result) => {
 			callback(result);
 			console.log(result);
@@ -37,8 +28,8 @@ export const updateLayoutService = (callback, payload) => {
 	);
 };
 
-export const deleteLayoutService = (callback) => {
-	axios.delete('http://localhost:3000/layout').then(
+export const deleteLayoutService = (callback, payload) => {
+	axios.delete(`${APIUrl}/layout?id=` + payload).then(
 		(result) => {
 			callback(result);
 			console.log(result);
@@ -50,16 +41,18 @@ export const deleteLayoutService = (callback) => {
 };
 
 // TODO resolve issue
-export const addItemService = (callback) => {
+export const addItemService = (callback, data) => {
+	console.log(data)
 	axios
-		.post('http://localhost:3000/layout', {
+		.post(`${APIUrl}/item`, {
 			// TODO default layout to arrange side by side in empty spaces
 			layout: {
 				x: 0,
-				y: 100000,
+				y: 0,
 				w: 2,
 				h: 2,
 			},
+			...data
 		})
 		.then(
 			(result) => {

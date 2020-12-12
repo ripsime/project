@@ -1,6 +1,7 @@
 import { render } from 'less';
 import React, { Component } from 'react';
-import LineChart from '../../components/LineChart';
+import LineChart from '../../components/charts/LineChart';
+import BarChart from '../../components/charts/BarChart';
 
 import './home.less';
 class Home extends Component {
@@ -17,7 +18,7 @@ class Home extends Component {
             this.setState({
                 data: this.getData()
             })
-        }, 5000)
+        }, 500000)
     }
 
     // TODO : This is for dummy data
@@ -40,7 +41,7 @@ class Home extends Component {
 
         data.push({
             title: 'Visits',
-            data: this.getRandomDateArray(150)
+            data: this.getRandomDateArray(10)
         });
 
         return data;
@@ -48,14 +49,20 @@ class Home extends Component {
 
     render() {
         return (
-            <>
+            <div>
                 <div>Home</div>
                 <LineChart
                     data={this.state.data[0].data}
                     title={this.state.data[0].title}
                     color="#3E517A"
                 />
-            </>
+
+                <BarChart
+                    data={this.state.data[0].data}
+                    title={this.state.data[0].title}
+                    color="#3E517A"
+                />
+            </div>
         )
     }
 

@@ -54,15 +54,14 @@ exports.set = (req, res) => {
 };
 
 exports.update = (req, res) => {
-	debugger
 	const { layout } = req.body;
 	const data = layout
-	const ids = data.map(i => ({_id: i._id}))
+
 	try {
 		let response = 0;
 		for (let i in data) {
 			let item = data[i]
-			db.layout.update({_id: item._id}, {$set: {w: item.w, h: item.h, x: item.x, y: item.y}}, {}, (err, docs) => {
+			db.layout.update({_id: item.i}, {$set: {w: item.w, h: item.h, x: item.x, y: item.y}}, {}, (err, docs) => {
 				if (err) {
 					/*Ignore*/
 					console.log(err)
@@ -79,14 +78,18 @@ exports.update = (req, res) => {
 };
 
 exports.delete = (req, res) => {
+	const id = req.query.id;
+	
 	try {
-		db.layout.remove({}, {multi: true}, (err, docs) => {
+		db.layout.remove({_id: id}, {}, (err, docs) => {
 			if (err) {
 				/*Ignore*/
 			} else {
-				return res.send(`Deleted$ ${docs}`);
+				return res.send({
+					isSuccess: true,
+				});
 			}
-		});
+		});		
 	} catch (e) {
 		/*Ignore*/
 	}
@@ -97,7 +100,6 @@ exports.add = (req, res) => {
 	console.log('Add item');
 
 	const { layout } = req.body;
-
 	db.layout.insert(layout, () => {
 		console.log('Added');
 		return res.send({
