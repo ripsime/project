@@ -1,5 +1,6 @@
 module.exports = (app) => {
 	const layout = require('../controllers/layout.controller.js');
+	const sensors = require('../controllers/sensors.controller.js');
 
 	// Get Layout
 	app.get('/layout', layout.get);
@@ -17,6 +18,6 @@ module.exports = (app) => {
 	// Add item
 	app.post('/item', layout.add);
 
-
-
+	// Get Sensors
+	app.get('/sensors', sensors.get);
 };

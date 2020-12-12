@@ -17,7 +17,7 @@ export const getLayoutService = (callback) => {
 
 export const updateLayoutService = (callback, payload) => {
 	console.log("payload: ", payload)
-	axios.put(`${APIUrl}/layout`, {layout: payload} ).then(
+	axios.put(`${APIUrl}/layout`, { layout: payload }).then(
 		(result) => {
 			callback(result);
 			console.log(result);
@@ -64,4 +64,16 @@ export const addItemService = (callback, data) => {
 				console.log(`Error - ${error}`);
 			}
 		);
+};
+
+export const getSensorsService = (callback) => {
+	axios.get(`${APIUrl}/sensors`).then(
+		(result) => {
+			callback(result);
+			console.log(result);
+		},
+		(error) => {
+			console.log(`Error - ${error}`);
+		}
+	);
 };
