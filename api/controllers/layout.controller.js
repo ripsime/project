@@ -62,7 +62,7 @@ exports.update = (req, res) => {
 		let response = 0;
 		for (let i in data) {
 			let item = data[i]
-			db.layout.update({_id: item.i}, {$set: {w: item.w, h: item.h, x: item.x, y: item.y}}, {}, (err, docs) => {
+			db.layout.update({_id: item.i}, {$set: {layout: {w: item.w, h: item.h, x: item.x, y: item.y}}}, {}, (err, docs) => {
 				if (err) {
 					/*Ignore*/
 					console.log(err)

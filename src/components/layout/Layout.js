@@ -77,7 +77,7 @@ class Layout extends Component {
 	};
 
 	render() {
-		var lyt = _.map(this.props.layout, (el)=>({i: el._id, w:el.w, h:el.h, x: el.x, y: el.y, minW: 5, minH: 3, maxW: 12, maxH: 6}))
+		var lyt = _.map(this.props.layout, (el)=>({i: el._id, w:el.layout.w, h:el.layout.h, x: el.layout.x, y: el.layout.y, minW: 5, minH: 3, maxW: 12, maxH: 6}))
 		
 		// var lyt = _.map(this.props.layout, (el)=>{
 		// 	console.log(el, 'want 3')
@@ -97,13 +97,7 @@ class Layout extends Component {
 				width={this.props.width}
 				layout={lyt}
 			>
-				{_.map(this.state.layout, (el) => {
-					return (
-						<Fragment key={el._id}>
-							{this.createElement(el.layout)}
-						</Fragment>
-					)
-				})}
+				{_.map(this.state.layout, (el) => this.createElement(el))}
 			</GridLayout>
 		);
 	}

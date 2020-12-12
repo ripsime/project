@@ -47,7 +47,7 @@ export const addItemService = (callback, data) => {
 			// TODO default layout to arrange side by side in empty spaces
 			layout: {
 				x: 0,
-				y: 0,
+				y: 10000,
 				w: 5,
 				h: 3,
 			},
