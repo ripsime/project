@@ -27,6 +27,7 @@ exports.get = (req, res) => {
 
 // Set Layout
 exports.set = (req, res) => {
+
 	const { layout } = req.body;
 	const data = JSON.parse(layout)
 
@@ -97,9 +98,11 @@ exports.delete = (req, res) => {
 
 // Add item
 exports.add = (req, res) => {
+
 	console.log('Add item');
 
-	const { layout } = req.body;
+	const layout = req.body;
+
 	db.layout.insert(layout, () => {
 		console.log('Added');
 		return res.send({

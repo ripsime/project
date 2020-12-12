@@ -7,7 +7,7 @@ export const getLayoutService = (callback) => {
 	axios.get(`${APIUrl}/layout`).then(
 		(result) => {
 			callback(result);
-			console.log(result);
+			console.log(result,'wanted');
 		},
 		(error) => {
 			console.log(`Error - ${error}`);
@@ -42,7 +42,6 @@ export const deleteLayoutService = (callback, payload) => {
 
 // TODO resolve issue
 export const addItemService = (callback, data) => {
-	console.log(data)
 	axios
 		.post(`${APIUrl}/item`, {
 			// TODO default layout to arrange side by side in empty spaces
