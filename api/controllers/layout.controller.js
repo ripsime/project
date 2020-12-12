@@ -31,13 +31,23 @@ exports.set = (req, res) => {
 	const data = JSON.parse(layout)
 
 	try {
-		db.layout.insert(data, (err, docs) => {
-			if (err) {
-				/*Ignore*/
-			} else {
-				return res.send(docs);
-			}
-		});
+		const response = {};
+		for (let i in data) {
+			let item = data[i]
+			db.layout.insert({layout: item}, (err, docs) => {
+				if (err) {
+					/*Ignore*/
+				} else {
+					response[docs.layout.name] = docs._id
+				}
+			});
+		}
+		setTimeout(() => {
+
+			db.layout.loadDatabase()
+
+			return res.send({data: response});
+		}, 100)
 	} catch (e) {
 		/*Ignore*/
 	}

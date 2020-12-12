@@ -3,6 +3,7 @@ export const ADD_ITEM = 'ADD_ITEM';
 export const SET_LAYOUT = 'SET_LAYOUT';
 export const UPDATE_LAYOUT = 'UPDATE_LAYOUT';
 export const DELETE_LAYOUT = 'DELETE_LAYOUT';
+export const GET_SENSORS = 'GET_SENSORS';
 
 export function get_layout(payload) {
 	return {
@@ -35,6 +36,13 @@ export function update_layout(payload) {
 export function delete_layout(payload) {
 	return {
 		type: DELETE_LAYOUT,
+		payload,
+	};
+}
+
+export function get_sensors(payload) {
+	return {
+		type: GET_SENSORS,
 		payload,
 	};
 }

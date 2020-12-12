@@ -16,6 +16,7 @@ import {
 	updateLayoutService,
 	addItemService,
 	deleteLayoutService,
+	getSensorsService,
 } from './dashboardService';
 
 import AddItemPopup from '../../components/addItemPopup/AddItemPopup';
@@ -30,6 +31,7 @@ class Dashboard extends Component {
 	}
 	componentDidMount() {
 		getLayoutService(this.props.get_layout);
+		getSensorsService(this.props.get_sensors);
 	}
 
 	componentDidUpdate() {
@@ -52,8 +54,8 @@ class Dashboard extends Component {
 	};
 
 	openAddItemPopup = () => {
-		this.setState({isAddItemPopUp:true})
-	};	
+		this.setState({ isAddItemPopUp: true })
+	};
 
 	addSocketListener = (sensor, metric) => {
 		const socket = socketIOClient(`http://${PROPERTY.host}:${PROPERTY.port}`);
@@ -81,13 +83,13 @@ class Dashboard extends Component {
 	}
 
 	additem = (data) => {
-		this.setState({isAddItemPopUp:false})
+		this.setState({ isAddItemPopUp: false })
 		addItemService(this.props.add_item, data);
 		this.addSocketListener(data.sensor, data.metric);
 	};
 
 	cancelAddItem = () => {
-		this.setState({isAddItemPopUp:false})
+		this.setState({ isAddItemPopUp: false })
 	};
 
 	render() {
@@ -99,13 +101,13 @@ class Dashboard extends Component {
 					Add Item
 				</button>
 				<Modal>
-					{ this.state.isAddItemPopUp && 
-						<AddItemPopup 
-							addItem={this.additem} 
+					{this.state.isAddItemPopUp &&
+						<AddItemPopup
+							addItem={this.additem}
 							cancelAddItem={this.cancelAddItem}
 						/>
-					}						
-				</Modal>				
+					}
+				</Modal>
 				<div>
 					<Layout
 						layout={this.props.layout}
