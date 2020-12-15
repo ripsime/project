@@ -2,7 +2,7 @@ import React, { Component, createRef } from "react";
 
 import "./addItemPopup.less";
 
-const TYPE = ["line", "bar"];
+const TYPE = ["line", "bar", "thermometer"];
 const METRIC = ["1", "2"];
 const SENSOR = ["1", "2"];
 
