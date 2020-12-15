@@ -1,14 +1,16 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const http = require("http");
-const socketIo = require("socket.io");
 
 const app = express();
 const server = http.createServer(app);
-const io = socketIo(server);
 
 const port = "3000";
 const host = "localhost";
+
+/* Sockets ******************************************************* */
+const io = require("./socketServer");
+io.initSockets(server);
 
 /* Body Parser ******************************************************* */
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -51,15 +53,6 @@ if (process.env.NODE_ENV === "development") {
 
 app.get("/*", (req, res) => {
 	res.sendFile(process.cwd() + "/public/index.html");
-});
-
-io.on("connection", socket => {
-	socket.on("join", (room)=>{
-		socket.join(room);
-	});
-    socket.on("incoming", (room, data)=>{
-    	socket.to(room).emit("outgoing", {data: data});
-    });
 });
 
 server.listen(port, () => {
