@@ -5,14 +5,12 @@ export default function Thermometer({ width, height, steps, minValue, maxValue, 
     const rand = `${Math.random()}`;
     let tubeWidth = 21.5;
     const allsteps = [];
-    console.log('Max ', maxValue, 'MinVal ', minValue);
     const eachStepVal = (parseInt(maxValue) - parseInt(minValue)) / steps;
     //Y ranges from min = 295  max = 14  
     const lengthOfTube = 295 - 34;
     const eachStepY = lengthOfTube / steps;
     const currentValueY = 295 - (lengthOfTube * currentValue / (maxValue - minValue));
 
-    console.log(currentValueY);
     let val, y;
     for (let i = 0; i <= steps; i++) {
         val = minValue + i * eachStepVal;

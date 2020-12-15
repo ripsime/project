@@ -34,7 +34,6 @@ class Layout extends Component {
 		let data = this.state.data[`${el.sensor}_${el.metric}`];
 
 		if (el.type === "thermometer") {
-			console.log(`${el.sensor}_${el.metric}    ${data ? data[data.length - 1].value : -10000}`)
 			chart = <ThermometerChart
 				title={el.name}
 				steps={8}
