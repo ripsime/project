@@ -4,16 +4,18 @@ import {
 	ADD_ITEM,
 	DELETE_LAYOUT,
 	GET_SENSORS,
+	ADD_SOCKET_LISTENER,
+	GET_CHART_DATA,
 } from '../containers/dashboard/dashboardActions';
 
 const initialState = {
 	layout: [],
 	loading: false,
 	sensors: [],
+	data: {},
 };
 
 function dashboard(state = initialState, action) {
-	console.log(state,'redux')
 	switch (action.type) {
 		case GET_LAYOUT: {
 			return {
@@ -46,6 +48,17 @@ function dashboard(state = initialState, action) {
 			return {
 				...state,
 				senors: action.payload.data,
+			};
+		}			
+		case ADD_SOCKET_LISTENER: {
+			return {
+				...state,
+			};
+		}
+		case GET_CHART_DATA: {
+			return {
+				...state,
+				data: action.payload.data,
 			};
 		}
 		default:

@@ -1,5 +1,7 @@
 import axios from 'axios';
 import PROPERTY from '../../../property'
+import SocketHandler from '../../../api/sockets/socketHandler';
+const socketHandler = new SocketHandler();
 
 const APIUrl = `http://${PROPERTY.host}:${PROPERTY.port}`;
 
@@ -76,3 +78,8 @@ export const getSensorsService = (callback) => {
 		}
 	);
 };
+
+export const addSocketListenerService = (callback, sensor, metric, onDataReceived) => {
+	socketHandler.addSocketListener(sensor, metric, onDataReceived);
+	callback();
+}

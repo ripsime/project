@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import socketIOClient from "socket.io-client";
-import PROPERTY from "../../../property";
 import _ from 'lodash';
 
 // Components
@@ -17,6 +15,7 @@ import {
 	addItemService,
 	deleteLayoutService,
 	getSensorsService,
+	addSocketListenerService,
 } from './dashboardService';
 
 import AddItemPopup from '../../components/addItemPopup/AddItemPopup';
@@ -26,7 +25,6 @@ import "./dashboard.less";
 class Dashboard extends Component {
 	state={
 		isAddItemPopUp:false,
-		data: {},
 		socketListenersAdded: false,
 	}
 	componentDidMount() {
@@ -37,16 +35,15 @@ class Dashboard extends Component {
 	componentDidUpdate() {
 		if (this.props.loading) {
 			getLayoutService(this.props.get_layout);
-		}
-
-		if(!this.state.socketListenersAdded){
-			_.map(this.props.layout, (el) => this.addSocketListener(el.sensor, el.metric));
-			this.setState({socketListenersAdded: true})
-		}
+		} 
+		else if (!this.state.socketListenersAdded && this.props.layout.length) {
+			_.map(this.props.layout, (el) => addSocketListenerService(this.props.add_socket_listener, el.sensor, el.metric, this.props.get_chart_data));
+			this.setState({socketListenersAdded: true});
+		}		
 	}
 
 	updateLayout = (layout) => {
-		updateLayoutService(this.props.update_layout, layout);
+		updateLayoutService(this.props.update_layout, layout);		
 	};
 
 	deleteLayout = (_id) => {
@@ -55,37 +52,12 @@ class Dashboard extends Component {
 
 	openAddItemPopup = () => {
 		this.setState({ isAddItemPopUp: true })
-	};
-
-	addSocketListener = (sensor, metric) => {
-		const socket = socketIOClient(`http://${PROPERTY.host}:${PROPERTY.port}`);
-		
-		var key = `${sensor}_${metric}`;
-
-		socket.emit('join', key);
-		socket.on("outgoing", resp => {
-			let baseTime = new Date().getTime();			
-			let val = {
-				time: new Date(baseTime),
-				value: resp.data.value,
-			};            
-			let existingData = this.state.data[key] || [];
-			if(existingData.length >= 10){
-				existingData = existingData.slice(1);
-			}
-			existingData.push(val)
-	
-			let copiedData = this.state.data;
-			copiedData[key] = existingData;
-
-			this.setState({data: copiedData});
-		});
-	}
+	};	
 
 	additem = (data) => {
 		this.setState({ isAddItemPopUp: false })
 		addItemService(this.props.add_item, data);
-		this.addSocketListener(data.sensor, data.metric);
+		addSocketListenerService(this.props.add_socket_listener, data.sensor, data.metric);
 	};
 
 	cancelAddItem = () => {
@@ -111,7 +83,7 @@ class Dashboard extends Component {
 				<div>
 					<Layout
 						layout={this.props.layout}
-						data={this.state.data}
+						data={this.props.data}
 						updateLayout={this.updateLayout}
 						deleteLayout={this.deleteLayout}
 					/>
@@ -125,6 +97,7 @@ function mapStateToProps(state) {
 	return {
 		layout: state.dashboard.layout,
 		loading: state.dashboard.loading,
+		data: state.dashboard.data,
 	};
 }
 

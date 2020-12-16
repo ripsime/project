@@ -4,6 +4,8 @@ export const SET_LAYOUT = 'SET_LAYOUT';
 export const UPDATE_LAYOUT = 'UPDATE_LAYOUT';
 export const DELETE_LAYOUT = 'DELETE_LAYOUT';
 export const GET_SENSORS = 'GET_SENSORS';
+export const ADD_SOCKET_LISTENER = 'ADD_SOCKET_LISTENER';
+export const GET_CHART_DATA = 'GET_CHART_DATA';
 
 export function get_layout(payload) {
 	return {
@@ -45,4 +47,17 @@ export function get_sensors(payload) {
 		type: GET_SENSORS,
 		payload,
 	};
+}
+
+export function add_socket_listener() {
+	return {
+		type: ADD_SOCKET_LISTENER,
+	}
+}
+
+export function get_chart_data(payload) {
+	return {
+		type: GET_CHART_DATA,
+		payload,
+	}
 }

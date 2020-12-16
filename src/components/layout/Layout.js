@@ -16,7 +16,6 @@ class Layout extends Component {
 
 	state = {
 		layout: this.props.layout,
-		data: this.props.data,
 	};
 
 	static getDerivedStateFromProps(nextProps, prevState) {
@@ -31,7 +30,7 @@ class Layout extends Component {
 
 	createElement = (el) => {
 		let chart;
-		let data = this.state.data[`${el.sensor}_${el.metric}`];
+		let data = this.props.data[`${el.sensor}_${el.metric}`];
 
 		if (el.type === "thermometer") {
 			chart = <ThermometerChart
@@ -93,16 +92,8 @@ class Layout extends Component {
 
 	render() {
 		var lyt = _.map(this.props.layout, (el)=>({i: el._id, w:el.layout.w, h:el.layout.h, x: el.layout.x, y: el.layout.y, minW: 5, minH: 3, maxW: 12, maxH: 6}))
-		
-		// var lyt = _.map(this.props.layout, (el)=>{
-		// 	console.log(el, 'want 3')
-		// 	const { layout } = el;
-			
-		// 	return ({i: el.name, w:layout.w, h:layout.h, x: layout.x, y: layout.y})
-		// })
 		return (
 			<GridLayout
-				// onLayoutChange={this.onLayoutChange}
 				onBreakpointChange={this.onBreakpointChange}
 				onDragStop={this.onDragStop}
 				onResizeStop={this.onResizeStop}
