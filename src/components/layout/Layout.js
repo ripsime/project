@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import _ from 'lodash';
 import GridLayout from 'react-grid-layout';
 import CustomChart from '../../components/charts/CustomChart';
@@ -77,7 +77,14 @@ class Layout extends Component {
 	};
 
 	render() {
-		var lyt = _.map(this.props.layout, (el)=>({i: el._id, w:el.w, h:el.h, x: el.x, y: el.y, minW: 5, minH: 3, maxW: 12, maxH: 6}))
+		var lyt = _.map(this.props.layout, (el)=>({i: el._id, w:el.layout.w, h:el.layout.h, x: el.layout.x, y: el.layout.y, minW: 5, minH: 3, maxW: 12, maxH: 6}))
+		
+		// var lyt = _.map(this.props.layout, (el)=>{
+		// 	console.log(el, 'want 3')
+		// 	const { layout } = el;
+			
+		// 	return ({i: el.name, w:layout.w, h:layout.h, x: layout.x, y: layout.y})
+		// })
 		return (
 			<GridLayout
 				// onLayoutChange={this.onLayoutChange}

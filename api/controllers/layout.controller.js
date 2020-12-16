@@ -27,6 +27,7 @@ exports.get = (req, res) => {
 
 // Set Layout
 exports.set = (req, res) => {
+
 	const { layout } = req.body;
 	const data = JSON.parse(layout)
 
@@ -61,7 +62,7 @@ exports.update = (req, res) => {
 		let response = 0;
 		for (let i in data) {
 			let item = data[i]
-			db.layout.update({_id: item.i}, {$set: {w: item.w, h: item.h, x: item.x, y: item.y}}, {}, (err, docs) => {
+			db.layout.update({_id: item.i}, {$set: {layout: {w: item.w, h: item.h, x: item.x, y: item.y}}}, {}, (err, docs) => {
 				if (err) {
 					/*Ignore*/
 					console.log(err)
@@ -97,9 +98,11 @@ exports.delete = (req, res) => {
 
 // Add item
 exports.add = (req, res) => {
+
 	console.log('Add item');
 
-	const { layout } = req.body;
+	const layout = req.body;
+
 	db.layout.insert(layout, () => {
 		console.log('Added');
 		return res.send({
