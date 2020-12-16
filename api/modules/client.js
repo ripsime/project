@@ -69,13 +69,12 @@ class Client extends Emmiter {
         });
     }
 
-    getData(sensorId) {
+    getData(sensorId, onMessage) {
         try {
             const subscribeTopic = '/v1.0/' + this.clientId + '/sensor/' + sensorId + '/livedata';
 
             this.on(subscribeTopic, (message) => {
-                console.log(message);
-                // onMessage(message, topic)
+                onMessage(sensorId, message);                
             });
         } catch (error) {
             console.error('Live Data Failed: ', error.message);
