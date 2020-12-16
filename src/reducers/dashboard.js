@@ -13,6 +13,7 @@ const initialState = {
 };
 
 function dashboard(state = initialState, action) {
+	console.log(state,'redux')
 	switch (action.type) {
 		case GET_LAYOUT: {
 			return {

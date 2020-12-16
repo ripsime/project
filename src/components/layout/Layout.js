@@ -1,9 +1,10 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import _ from 'lodash';
 import GridLayout from 'react-grid-layout';
 import CustomChart from '../../components/charts/CustomChart';
 
 import './layout.less';
+import ThermometerChart from '../charts/ThermometerChart';
 
 class Layout extends Component {
 	static defaultProps = {
@@ -26,22 +27,36 @@ class Layout extends Component {
 		}
 
 		return null;
-	}	
+	}
 
 	createElement = (el) => {
+		let chart;
+		let data = this.state.data[`${el.sensor}_${el.metric}`];
+
+		if (el.type === "thermometer") {
+			chart = <ThermometerChart
+				title={el.name}
+				steps={8}
+				minValue={-10}
+				maxValue={30}
+				currentValue={data ? data[data.length - 1].value : -10000} />
+		} else {
+			chart = <CustomChart
+				sensor={el.sensor}
+				metric={el.metric}
+				data={data || []}
+				title={el.name}
+				type={el.type}
+				color="#3E517A"
+			/>
+		}
+
 		return (
 			<div key={el._id} className='layout-item'>
 				<span className='remove' onClick={this.onRemoveItem.bind(this, el._id)}>
 					<i className="fa fa-times"></i>
 				</span>
-				<CustomChart
-					sensor={el.sensor}
-					metric={el.metric}
-					data={this.state.data[`${el.sensor}_${el.metric}`] || []}
-					title={el.name}
-					type={el.type}
-					color="#3E517A"
-				/>
+				{chart}
 			</div>
 		);
 	};
@@ -77,7 +92,14 @@ class Layout extends Component {
 	};
 
 	render() {
-		var lyt = _.map(this.props.layout, (el)=>({i: el._id, w:el.w, h:el.h, x: el.x, y: el.y, minW: 5, minH: 3, maxW: 12, maxH: 6}))
+		var lyt = _.map(this.props.layout, (el)=>({i: el._id, w:el.layout.w, h:el.layout.h, x: el.layout.x, y: el.layout.y, minW: 5, minH: 3, maxW: 12, maxH: 6}))
+		
+		// var lyt = _.map(this.props.layout, (el)=>{
+		// 	console.log(el, 'want 3')
+		// 	const { layout } = el;
+			
+		// 	return ({i: el.name, w:layout.w, h:layout.h, x: layout.x, y: layout.y})
+		// })
 		return (
 			<GridLayout
 				// onLayoutChange={this.onLayoutChange}
