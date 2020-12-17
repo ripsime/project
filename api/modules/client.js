@@ -82,6 +82,19 @@ class Client extends Emmiter {
             this.emit('LiveDataFailed', error)
         }
     }
+
+    subscribe(sensorId, callback) {
+        try {
+            const subscribeTopic = '/v1.0/' + this.clientId + '/sensor/' + sensorId + '/livedata';
+
+            this.on(subscribeTopic, (message) => {
+                callback(message);
+            });
+        } catch (error) {
+            console.error('Live Data Failed: ', error.message);
+            this.emit('LiveDataFailed', error)
+        }
+    }
 }
 
 module.exports = Client;

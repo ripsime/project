@@ -6,16 +6,17 @@ export default class SocketHandler {
 		this.chartData = {};
 	}
 
-	addSocketListener = (sensor, metric, onDataReceived) => {
+	addSocketListener = (sensorId, metricId, onDataReceived) => {
 		const socket = socketIOClient(`http://${PROPERTY.host}:${PROPERTY.port}`);
 
-		var key = `${sensor}_${metric}`;
-
+		var key = `${sensorId}_${metricId}`;
 		socket.emit('join', key);
-		socket.on("outgoing", resp => {
-			let baseTime = new Date().getTime();
+		
+		socket.emit('subscribe', sensorId);
+
+		socket.on("publish", resp => {
 			let val = {
-				time: new Date(baseTime),
+				time: new Date(resp.data.timestamp),
 				value: resp.data.value,
 			};
 			let existingData = this.chartData[key] || [];
@@ -23,7 +24,6 @@ export default class SocketHandler {
 				existingData = existingData.slice(1);
 			}
 			existingData.push(val)
-
 			this.chartData[key] = existingData;
 
 			onDataReceived({ data: Object.assign({}, this.chartData) });

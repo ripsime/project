@@ -12,22 +12,17 @@ module.exports.initSockets = function (server) {
         socket.on("join", (room) => {
             socket.join(room);
         });
-        // socket.on("incoming", (room, data)=>{
-        // 	socket.to(room).emit("outgoing", {data: data});
-        // });
 
-        const onMessage = (sensorId, message) => {
-            var metrics = JSON.parse(message).metrics;
-            for (let i = 0; i < metrics.length; i++) {
-                let room = `${sensorId}_${metrics[i].metricId}`;
-                socket.to(room).emit("outgoing", { data: { value: metrics[i].value } })
-            }
-        }
+        socket.on('subscribe', (sensorId) => {
+            client.subscribe(sensorId, (message) => {
+                var messageObject = JSON.parse(message);
+                var metrics = messageObject.metrics;
 
-        client.getSensors().then((sensors) => {
-            for (let i = 0; i < sensors.length; i++){
-                client.getData(sensors[i].sensorId, onMessage);
-            }
+                for (let i = 0; i < metrics.length; i++) {
+                    let room = `${sensorId}_${metrics[i].metricId}`;
+                    socket.to(room).emit("publish", { data: { value: metrics[i].value, timestamp: messageObject.timestamp } })
+                }
+            })
         });
     });
 }
