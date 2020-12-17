@@ -23,10 +23,11 @@ import AddItemPopup from '../../components/addItemPopup/AddItemPopup';
 import "./dashboard.less";
 
 class Dashboard extends Component {
-	state={
-		isAddItemPopUp:false,
+	state = {
+		isAddItemPopUp: false,
 		socketListenersAdded: false,
 	}
+
 	componentDidMount() {
 		getLayoutService(this.props.get_layout);
 		getSensorsService(this.props.get_sensors);
@@ -35,15 +36,16 @@ class Dashboard extends Component {
 	componentDidUpdate() {
 		if (this.props.loading) {
 			getLayoutService(this.props.get_layout);
-		} 
+			getSensorsService(this.props.get_sensors);
+		}
 		else if (!this.state.socketListenersAdded && this.props.layout.length) {
 			_.map(this.props.layout, (el) => addSocketListenerService(this.props.add_socket_listener, el.sensor, el.metric, this.props.get_chart_data));
-			this.setState({socketListenersAdded: true});
-		}		
+			this.setState({ socketListenersAdded: true });
+		}
 	}
 
 	updateLayout = (layout) => {
-		updateLayoutService(this.props.update_layout, layout);		
+		updateLayoutService(this.props.update_layout, layout);
 	};
 
 	deleteLayout = (_id) => {
@@ -52,7 +54,7 @@ class Dashboard extends Component {
 
 	openAddItemPopup = () => {
 		this.setState({ isAddItemPopUp: true })
-	};	
+	};
 
 	additem = (data) => {
 		this.setState({ isAddItemPopUp: false })
@@ -67,7 +69,7 @@ class Dashboard extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				<div className="dashboard-title">Dashboard</div>		
+				<div className="dashboard-title">Dashboard</div>
 				<button onClick={this.openAddItemPopup} className="addButton">
 					<i className="fa fa-plus"></i>
 					Add Item
@@ -75,6 +77,7 @@ class Dashboard extends Component {
 				<Modal>
 					{this.state.isAddItemPopUp &&
 						<AddItemPopup
+							sensors={this.props.sensors}
 							addItem={this.additem}
 							cancelAddItem={this.cancelAddItem}
 						/>
@@ -98,6 +101,7 @@ function mapStateToProps(state) {
 		layout: state.dashboard.layout,
 		loading: state.dashboard.loading,
 		data: state.dashboard.data,
+		sensors: state.dashboard.sensors,
 	};
 }
 

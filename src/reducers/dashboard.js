@@ -43,13 +43,13 @@ function dashboard(state = initialState, action) {
 				loading: true,
 				layout: action.payload.layout,
 			}
-		}		
+		}
 		case GET_SENSORS: {
 			return {
 				...state,
-				senors: action.payload.data,
+				sensors: action.payload.data,
 			};
-		}			
+		}
 		case ADD_SOCKET_LISTENER: {
 			return {
 				...state,

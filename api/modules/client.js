@@ -20,7 +20,7 @@ class Client extends Emmiter {
             const allClientTopics = this.APIversion + '+/#';
             this.client.subscribe(allClientTopics);
 
-            this.client.on('connect', this.onConnect.bind(this));
+            this.client.once('connect', this.onConnect.bind(this));
             this.client.on('message', this.onMessage.bind(this));
             this.client.on('error', this.onError.bind(this));
         } catch (error) {
@@ -38,7 +38,8 @@ class Client extends Emmiter {
     }
 
     onError(msg) {
-        this.emit('error', msg);
+        console.log('Error', msg);
+        // this.emit('error', msg);
     }
 
     getSensors() {
@@ -74,7 +75,7 @@ class Client extends Emmiter {
             const subscribeTopic = '/v1.0/' + this.clientId + '/sensor/' + sensorId + '/livedata';
 
             this.on(subscribeTopic, (message) => {
-                onMessage(sensorId, message);                
+                onMessage(sensorId, message);
             });
         } catch (error) {
             console.error('Live Data Failed: ', error.message);
