@@ -13,7 +13,7 @@ module.exports.initSockets = function (server) {
             socket.join(room);
         });
 
-        socket.on('subscribe', (sensorId) => {
+        socket.once('subscribe', (sensorId) => {
             client.subscribe(sensorId, (message) => {
                 var messageObject = JSON.parse(message);
                 var metrics = messageObject.metrics;
@@ -22,7 +22,7 @@ module.exports.initSockets = function (server) {
                     let room = `${sensorId}_${metrics[i].metricId}`;
                     socket.to(room).emit("publish", { data: { value: metrics[i].value, timestamp: messageObject.timestamp } })
                 }
-            })
+            });
         });
     });
 }

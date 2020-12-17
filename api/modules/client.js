@@ -55,6 +55,7 @@ class Client extends Emmiter {
 
                 this.client.publish(publishTopic, message);
                 this.once(subscribeTopic, (msg) => {
+                    this.client.end();
                     sensors = JSON.parse(msg);
                     resolve(sensors);
                 });
@@ -87,9 +88,12 @@ class Client extends Emmiter {
         try {
             const subscribeTopic = '/v1.0/' + this.clientId + '/sensor/' + sensorId + '/livedata';
 
-            this.on(subscribeTopic, (message) => {
-                callback(message);
-            });
+            //TODO change this. Should unsubscribe on disconnect so that we don't have duplicate listeners
+            if (!this._events[subscribeTopic]) {
+                this.on(subscribeTopic, (message) => {
+                    callback(message);
+                });
+            }
         } catch (error) {
             console.error('Live Data Failed: ', error.message);
             this.emit('LiveDataFailed', error)
