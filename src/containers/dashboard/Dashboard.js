@@ -8,15 +8,19 @@ import Layout from '../../components/layout/Layout';
 import Modal from '../../components/modal/Modal';
 // Actions
 import * as dashboardActions from './dashboardActions';
+import * as sensorActions from '../shared/sensorActions';
 // Services
 import {
 	getLayoutService,
 	updateLayoutService,
 	addItemService,
 	deleteLayoutService,
-	getSensorsService,
 	addSocketListenerService,
 } from './dashboardService';
+
+import {
+	getSensorsService
+} from '../shared/sensorService'
 
 import AddItemPopup from '../../components/addItemPopup/AddItemPopup';
 
@@ -69,7 +73,7 @@ class Dashboard extends Component {
 	render() {
 		return (
 			<React.Fragment>
-				<div className="dashboard-title">Dashboard</div>
+				<div className="title">Dashboard</div>
 				<button onClick={this.openAddItemPopup} className="addButton">
 					<i className="fa fa-plus"></i>
 					Add Item
@@ -106,7 +110,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-	return bindActionCreators(dashboardActions, dispatch);
+	return bindActionCreators(Object.assign({}, dashboardActions, sensorActions), dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);

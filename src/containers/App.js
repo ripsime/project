@@ -5,7 +5,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Header from "./common/header/Header";
 import Panel from './common/panel/panel';
 import PageNotFound from "./common/PageNotFound";
-import Home from "./home/home";
+import Home from "./home/Home";
 
 // Containers
 import Dashboard from "./dashboard/Dashboard";

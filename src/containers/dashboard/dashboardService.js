@@ -67,29 +67,6 @@ export const addItemService = (callback, data) => {
 		);
 };
 
-export const getSensorsService = (callback) => {
-	axios.get(`${APIUrl}/sensors`).then(
-		(result) => {
-			callback(result);
-			console.log(result);
-		},
-		(error) => {
-			console.log(`Error - ${error}`);
-		}
-	);
-};
-
-export const getMetricInfoService = (sensorId, metricId, callback) => {
-	axios.get(`${APIUrl}/metricInfo?sensorId=${sensorId}&metricId=${metricId}`).then(
-		(result) => {
-			callback(result);
-		},
-		(error) => {
-			console.log(`Error - ${error}`);
-		}
-	);
-};
-
 export const addSocketListenerService = (callback, sensor, metric, onDataReceived) => {
 	socketHandler.addSocketListener(sensor, metric, onDataReceived);
 	callback();

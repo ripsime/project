@@ -42,13 +42,6 @@ export function delete_layout(payload) {
 	};
 }
 
-export function get_sensors(payload) {
-	return {
-		type: GET_SENSORS,
-		payload,
-	};
-}
-
 export function add_socket_listener() {
 	return {
 		type: ADD_SOCKET_LISTENER,

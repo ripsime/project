@@ -3,10 +3,13 @@ import {
 	UPDATE_LAYOUT,
 	ADD_ITEM,
 	DELETE_LAYOUT,
-	GET_SENSORS,
 	ADD_SOCKET_LISTENER,
 	GET_CHART_DATA,
 } from '../containers/dashboard/dashboardActions';
+
+import {
+	GET_SENSORS
+} from '../containers/shared/sensorActions';
 
 const initialState = {
 	layout: [],

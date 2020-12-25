@@ -35,9 +35,9 @@ class Layout extends Component {
 		if (el.type === "thermometer") {
 			chart = <ThermometerChart
 				title={el.name}
-				steps={7}
-				minValue={30}
-				maxValue={100}
+				steps={8}
+				minValue={40}
+				maxValue={120}
 				currentValue={data ? data[data.length - 1].value : -10000} />
 		} else {
 			chart = <CustomChart
