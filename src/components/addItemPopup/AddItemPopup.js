@@ -3,7 +3,6 @@ import React, { Component, createRef } from "react";
 import "./addItemPopup.less";
 
 const TYPE = ["line", "bar", "thermometer"];
-const METRIC = ["1", "2"];
 
 class AddItemPopup extends Component {
 	state = {
@@ -30,6 +29,7 @@ class AddItemPopup extends Component {
 
 	render() {
 		const { sensors } = this.props;
+		const metrics = this.state.sensor ? _.find(sensors, s => s.sensorId == this.state.sensor).metrics : [];
 
 		return (
 			<div className="modalPopup">
@@ -51,7 +51,8 @@ class AddItemPopup extends Component {
 						</div>
 						<div className="sensor">
 							<label>Sensor</label>
-							<select value={this.state.sensor} onChange={this.setSensor}>
+							<select onChange={this.setSensor}>
+									<option key={0}></option>
 								{sensors.map((item) => (
 									<option value={item.sensorId} key={item.sensorId}>
 										{item.name}
@@ -62,8 +63,8 @@ class AddItemPopup extends Component {
 						<div className="metric">
 							<label htmlFor="fmetric">Metric</label>
 							<select name="" id="fmetric" ref={this.metricRef}>
-								{METRIC.map((v, i) => (
-									<option value={v.sensorId} key={i}>
+								{metrics.map((v) => (
+									<option value={v.metricId} key={v.metricId}>
 										{v.name}
 									</option>
 								))}

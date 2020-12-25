@@ -11,22 +11,24 @@ export default class SocketHandler {
 
 		var key = `${sensorId}_${metricId}`;
 		socket.emit('join', key);
-		
+
 		socket.emit('subscribe', sensorId);
 
-		socket.on("publish", resp => {
-			let val = {
-				time: new Date(resp.data.timestamp),
-				value: resp.data.value,
-			};
-			let existingData = this.chartData[key] || [];
-			if (existingData.length >= 10) {
-				existingData = existingData.slice(1);
-			}
-			existingData.push(val)
-			this.chartData[key] = existingData;
+		if (!this.chartData[key]) {
+			socket.on("publish", resp => {
+				let val = {
+					time: new Date(resp.data.timestamp),
+					value: resp.data.value,
+				};
+				let existingData = this.chartData[key] || [];
+				if (existingData.length >= 10) {
+					existingData = existingData.slice(1);
+				}
+				existingData.push(val)
+				this.chartData[key] = existingData;
 
-			onDataReceived({ data: Object.assign({}, this.chartData) });
-		});
+				onDataReceived({ data: Object.assign({}, this.chartData) });
+			});
+		}
 	}
 }

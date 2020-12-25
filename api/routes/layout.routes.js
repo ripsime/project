@@ -20,4 +20,7 @@ module.exports = (app) => {
 
 	// Get Sensors
 	app.get('/sensors', sensors.get);
+
+	// Get Metric Info
+	app.get('/metricInfo', sensors.getMetricInfo);
 };

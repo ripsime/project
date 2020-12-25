@@ -79,6 +79,17 @@ export const getSensorsService = (callback) => {
 	);
 };
 
+export const getMetricInfoService = (sensorId, metricId, callback) => {
+	axios.get(`${APIUrl}/metricInfo?sensorId=${sensorId}&metricId=${metricId}`).then(
+		(result) => {
+			callback(result);
+		},
+		(error) => {
+			console.log(`Error - ${error}`);
+		}
+	);
+};
+
 export const addSocketListenerService = (callback, sensor, metric, onDataReceived) => {
 	socketHandler.addSocketListener(sensor, metric, onDataReceived);
 	callback();

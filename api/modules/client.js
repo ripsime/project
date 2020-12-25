@@ -1,5 +1,6 @@
 const mqtt = require('mqtt');
 const Emmiter = require('events');
+const _ = require('lodash');
 
 const connectionOptions = require('../../configs/connectionOptions');
 
@@ -54,10 +55,19 @@ class Client extends Emmiter {
                 let sensors = [];
 
                 this.client.publish(publishTopic, message);
-                this.once(subscribeTopic, (msg) => {
-                    this.client.end();
+                this.once(subscribeTopic, async (msg) => {
                     sensors = JSON.parse(msg);
-                    resolve(sensors);
+
+                    let result = await Promise.all(_.map(sensors, async (sensor) => {
+                        sensor.metrics = await Promise.all(_.map(sensor.metrics, async (metric) => {
+                            return this.getMetricInfo(sensor.sensorId, metric.metricId);
+                        }));
+
+                        return sensor;
+                    }));
+                    
+                    this.client.end();
+                    resolve(result);
                 });
                 if (errorTopic) {
                     this.once(errorTopic, (error) => {
@@ -67,6 +77,34 @@ class Client extends Emmiter {
             } catch (error) {
                 console.error('Sensor List Failed: ', error.message);
                 this.emit('SensorListFailed', error)
+            }
+        });
+    }
+
+    getMetricInfo(sensorId, metricId) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const publishTopic = this.APIversion + this.clientId + "/sensor/" + sensorId + "/metric/" + metricId + '/inventory';
+                const subscribeTopic = publishTopic + '/inbox';
+                const errorTopic = publishTopic + '/error/inbox';
+
+                const message = '{}';
+
+                let metricInfo = {};
+
+                this.client.publish(publishTopic, message);
+                this.once(subscribeTopic, (msg) => {
+                    metricInfo = JSON.parse(msg);
+                    resolve(metricInfo);
+                });
+                if (errorTopic) {
+                    this.once(errorTopic, (error) => {
+                        reject('Error getting metric info');
+                    });
+                }
+            } catch (error) {
+                console.error('Metric Info Failed: ', error.message);
+                this.emit('MetricInfoFailed', error)
             }
         });
     }
